@@ -1,5 +1,4 @@
-div{
-    text-overflow: "ellipsis";
-    width: "300px";
+.scroll-y{
+    overflow-y: "scroll";
     height: "150px"
 }

@@ -9,9 +9,11 @@ export default class TaskCard extends React.Component {
                     <div className="card-header d-flex justify-content-between">
                         {this.props.task.title}
                     </div>
-                    <div className="card-body d-flex justify-content-bettween">
+                    <div className="card-body">
                         {this.props.task.description}
                     </div>
+                    <button className="btn btn-primary mt-2 ">Done</button>
+                    <button className="btn btn-danger mt-1">Delete</button>
                 </div>
             </div>
         )

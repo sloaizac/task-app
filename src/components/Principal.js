@@ -55,6 +55,13 @@ export default class Principal extends React.Component {
         })
     }
 
+    styleCompleted() {
+        return {
+            height: "600px",
+            overflowY: "scroll"
+        }
+    }
+
     render() {
         let element;
         if (this.state.showForm) {
@@ -64,9 +71,9 @@ export default class Principal extends React.Component {
             element = <TaskCard task={this.state.taskToShow}/>;
         }
         return (
-            <div className="container-fluid">
+            <div className="container-fluid" >
                 <div className="row">
-                    <div className="col-md-5">
+                    <div className="col-md-5" style={this.styleCompleted()}>
                         
                         <TasksList tasks={this.state.tasks}
                             setTask={this.setTask}
