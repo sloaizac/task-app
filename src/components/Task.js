@@ -28,13 +28,16 @@ class Task extends React.Component {
                     <div className="d-flex justify-content-end">
                         <button className="btn btn-primary btn-sm"
                             onClick={() => this.props.checkDone(task.id)}>Done</button>
-                        <button className="fas fa-trash-alt btn btn-outline-danger pt-2 ml-1" onClick={() => this.props.deleteTask(task.id)} />
+                        <button className="fas fa-trash-alt btn btn-danger pt-2 ml-1" onClick={() => this.props.deleteTask(task.id)} />
                     </div>
                 </div>
                 <div className="card-body d-flex justify-content-between" >
                     <p className="card-text">
                         {task.description}
                     </p>
+                </div>
+                <div className="card-footer ">
+                    hola
                 </div>
             </div>
         )

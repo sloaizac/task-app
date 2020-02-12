@@ -1,19 +1,28 @@
 import React from 'react';
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css';
 
 class TaskForm extends React.Component {
     state = {
         title: "",
-        description: ""
+        description: "",
+        date: new Date()
     }
 
     onSubmit = (event) => {
-        this.props.addTask(this.state.title, this.state.description);
+        this.props.addTask(this.state.title, this.state.description, this.state.date);
         event.preventDefault();
     }
 
     onChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
+        })
+    }
+
+    onChangeDate = (date) => {
+        this.setState({
+            date: date
         })
     }
 
@@ -39,7 +48,13 @@ class TaskForm extends React.Component {
                         ></textarea>
                     </div>
 
-                    <button type="submit" className="btn btn-outline-primary" onClick={this.onSubmit}>Save</button>
+                    <div className="form-group">
+                        <DatePicker name="date" selected={this.state.date} onChange={this.onChangeDate} />
+                    </div>
+
+                    <div className="form-group">
+                        <button type="submit" className="btn btn-outline-primary" onClick={this.onSubmit}>Save</button>
+                    </div>
                 </div>
             </div>
         );
