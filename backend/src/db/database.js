@@ -1,7 +1,9 @@
 const mysql = require("mysql");
 
 const db = mysql.createConnection({
-    "host": "localhost"
+    "host": "localhost",
+    "user": "root",
+    "database": "taskapp"
 });
 
 db.connect((err) => {
@@ -10,3 +12,6 @@ db.connect((err) => {
     }
     console.log("connected!");
 })
+
+
+module.exports = db;

@@ -1,20 +1,28 @@
 const express = require("express");
 const app = express();
-
-//db
+const cors = require("cors");
 
 //settings
 
 app.set('port', process.env.PORT || 4000);
 
+
 //middlewares
+
+app.use(cors());
+app.use(express.json());
 
 //global variables
 
-//routes
+//routes 
 
-//static files
+app.use(require('./routes/index'));
+app.use('/projects', require('./routes/projects'));
+app.use('/tasks', require('./routes/tasks'));
+app.use('/notes', require('./routes/notes'));
 
+//static files  
+  
 //server listening
 
 app.listen(app.get("port"), () => {
