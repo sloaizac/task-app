@@ -8,7 +8,8 @@ router.route('/')
 
     
 router.route('/:id')
-    .get(tasksCrtl.getTasks)    
+    .get(tasksCrtl.getTasks) 
+    .put(tasksCrtl.updateTask)   
     .delete(tasksCrtl.deleteTask)
     
 module.exports = router;

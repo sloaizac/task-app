@@ -38,3 +38,6 @@ CREATE TABLE notes(
     CONSTRAINT fk_user_notes FOREIGN KEY (user_id) REFERENCES users(id),
     PRIMARY KEY(id)
 );
+
+ALTER TABLE tasks ADD done BOOLEAN NOT NULL DEFAULT false AFTER description;
+ALTER TABLE tasks MODIFY description VARCHAR(255) DEFAULT " ";

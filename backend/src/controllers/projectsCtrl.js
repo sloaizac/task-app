@@ -10,7 +10,7 @@ projectsCtrl.getProjects = async (req, res) => {
             throw err;
         }
         res.send(result);
-    })
+    }) 
 }
 
 projectsCtrl.createProject = async (req, res) => {

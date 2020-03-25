@@ -35,4 +35,16 @@ tasksCtrl.deleteTask = async (req, res) => {
     })
 }
 
+tasksCtrl.updateTask = async (req, res) => {
+    const {id, title, description, done} = req.body;
+    let sql = "UPDATE tasks SET title = ? , description =  ?, done = ?  WHERE id = " + id;
+    let values = [title, description, done];
+    await db.query(sql, values, (err, result) => {
+        if(err){
+            throw err;
+        }
+        res.send("Sucessfully query");
+    })
+}
+
 module.exports = tasksCtrl;

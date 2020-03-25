@@ -7,14 +7,26 @@ import Task from './Task';
 export default class ProjectPanel extends React.Component {
 
     state = {
+        id: "",
         displayTaskCard: [],
         panel: ""
     }
 
     componentDidMount(){
+        
         this.setState({
+            id: this.props.project.id,
             displayTaskCard: new Array(this.props.project.tasks.length).fill(false)
         })
+    }
+
+    static getDerivedStateFromProps(props, state){
+        if(props.project.id !== state.id){
+            return {
+                id: props.project.id,
+                panel: ""}
+        }
+        return null
     }
 
 
@@ -35,9 +47,20 @@ export default class ProjectPanel extends React.Component {
         this.props.showProject(this.props.project.id);
     }
 
+    doneTask = async (task) => {
+        const newTask = {
+            id: task.id,
+            title: task.title,
+            description: task.description,
+            done: !task.done
+        }
+        await axios.put("http://localhost:4000/tasks/" + task.id, newTask);
+        this.props.showProject(this.props.project.id);
+    }
+
     handleClickAddTasks = () => {
         this.setState({
-            panel: <TaskForm project_id={this.props.project.id} addTask={this.addTask}
+            panel: <TaskForm project_id={this.state.id} addTask={this.addTask}
                 reset={this.reset}  />
         });
     }
@@ -60,6 +83,7 @@ export default class ProjectPanel extends React.Component {
 
 
     render() {
+
         return (
             <div className="container">
                 <div className="col-8 row d-flex justify-content-between">
@@ -79,7 +103,8 @@ export default class ProjectPanel extends React.Component {
                 <div className="container">
                     <ul className="list-group">
                         {this.props.project.tasks.map((t) => (
-                            <Task t={t} key={t.id} deleteTask={this.deleteTask} displayTaskCard={this.displayTaskCard} />
+                            <Task t={t} key={t.id} deleteTask={this.deleteTask} 
+                            displayTaskCard={this.displayTaskCard} doneTask={this.doneTask} />
                         ))}
                     </ul>
                 </div>
