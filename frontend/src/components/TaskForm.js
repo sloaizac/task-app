@@ -17,6 +17,7 @@ class TaskForm extends React.Component {
         this.props.reset();
     }
 
+
     onChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
