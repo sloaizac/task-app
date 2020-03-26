@@ -6,16 +6,21 @@ import Task from './Task';
 
 export default class ProjectPanel extends React.Component {
 
-    state = {
-        id: "",
-        displayTaskCard: [],
-        panel: "",
-        barState: 0
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: props.project.id,
+            title: props.project.title,
+            description: props.project.description,
+            doneButton: "",
+            displayTaskCard: [],
+            panel: "",
+            barState: 0
+        }
     }
 
     componentDidMount() {
         this.setState({
-            id: this.props.project.id,
             displayTaskCard: new Array(this.props.project.tasks.length).fill(false)
         })
 
@@ -23,7 +28,7 @@ export default class ProjectPanel extends React.Component {
 
 
     static getDerivedStateFromProps(props, state) {
-        
+
         const barState = () => {
             let totalTask = props.project.tasks.length;
             let doneTasks = 0;
@@ -37,8 +42,11 @@ export default class ProjectPanel extends React.Component {
 
         if (props.project.id !== state.id ||
             props.project.tasks.length !== state.displayTaskCard.length || barState() !== state.barState) {
-                return {
+            return {
                 id: props.project.id,
+                title: props.project.title,
+                description: props.project.description,
+                doneButton: "",
                 barState: barState(),
                 displayTaskCard: new Array(props.project.tasks.length).fill(false),
                 panel: ""
@@ -76,11 +84,11 @@ export default class ProjectPanel extends React.Component {
     }
 
     handleClickAddTasks = () => {
-        this.setState({panel: <TaskForm project_id={this.state.id} addTask={this.addTask} />});
-    } 
+        this.setState({ panel: <TaskForm project_id={this.state.id} addTask={this.addTask} /> });
+    }
 
     displayTaskCard = (id) => {
-        let taskIndex = this.props.project.tasks.map(t => {return t.id}).indexOf(id);
+        let taskIndex = this.props.project.tasks.map(t => { return t.id }).indexOf(id);
         let temp = this.state.displayTaskCard;
         temp[taskIndex] = !this.state.displayTaskCard[taskIndex];
         this.setState({
@@ -89,6 +97,25 @@ export default class ProjectPanel extends React.Component {
         return this.state.displayTaskCard[taskIndex];
     }
 
+    save = () => {
+        const newProject = {
+            id: this.state.id,
+            title: this.state.title,
+            description: this.state.description
+        }
+        this.props.updateProject(this.state.id, newProject);
+        this.setState({
+            doneButton: ""
+        })
+    }
+
+    onChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value,
+            doneButton: <button className="btn btn-success btn-sm" onClick={this.save}>done</button>
+        })
+
+    }
 
     render() {
 
@@ -96,10 +123,25 @@ export default class ProjectPanel extends React.Component {
             width: this.state.barState + "%"
         }
 
+        const taStyle = {
+            border: "none",
+            outline: "none",
+            background: "none",
+            height: "150px",
+            width: "700px"
+        }
+
+        const inputStyle = {
+            border: "none",
+            outline: "none",
+            background: "none",
+            fontSize: "170%"
+        }
+
         return (
             <div className="container">
                 <div className="col-9 row d-flex justify-content-between">
-                    <h2>{this.props.project.title}</h2>
+                    <input type="text" name="title" style={inputStyle} value={this.state.title} onChange={this.onChange} />
                     <div>
                         <button className="btn btn-outline-danger m-1" onClick={() => this.deleteAlert(this.props.project.id)}>
                             Delete
@@ -109,10 +151,11 @@ export default class ProjectPanel extends React.Component {
                         </button>
                     </div>
                 </div>
-                <div className="container mt-2">
-                    <p>{this.props.project.description}</p>
+                <div className="mt-2">
+                    <textarea name="description" style={taStyle} value={this.state.description} onChange={this.onChange} />
+                    <div className="m-2">{this.state.doneButton}</div>
                 </div>
-                <div className="container">
+                <div className="container mt-2">
                     <ul className="list-group">
                         {this.props.project.tasks.map((t) => (
                             <Task t={t} key={t.id} deleteTask={this.deleteTask}
@@ -123,7 +166,7 @@ export default class ProjectPanel extends React.Component {
                 <div className="container">
                     {this.state.panel}
                 </div>
-                <div className="progress col-6 mt-4">
+                <div className="progress col-9 mt-5">
                     <div className="progress-bar" role="progressbar" style={barStyle} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{this.state.barState}%</div>
                 </div>
             </div>

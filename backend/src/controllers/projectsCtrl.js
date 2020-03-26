@@ -31,9 +31,10 @@ projectsCtrl.createProject = async (req, res) => {
 }
 
 projectsCtrl.updateProject = async (req, res) => {
-    const id = req.params.id
-    let sql = "UPDATE projects SET title = 'projects_name' WHERE id = " + id;
-    await db.query(sql, (err, result) => {
+    const {id, title, description} = req.body
+    let sql = "UPDATE projects SET title = ?, description= ? WHERE id = " + id;
+    let values = [title, description];
+    await db.query(sql, values, (err, result) => {
         if (err) {
             throw err;
         }

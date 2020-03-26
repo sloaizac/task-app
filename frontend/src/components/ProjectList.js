@@ -36,11 +36,18 @@ export default class ProjectList extends React.Component {
         })
     }
 
+    updateProject = async (id, newProject) => {
+        await axios.put('http://localhost:4000/projects/' + id, newProject);
+        this.getProjects();
+        this.showProject(id);
+    }
+
     showProject  = async (id) => {
         const result = await axios.get('http://localhost:4000/projects/' + id);
         this.setState({
             currentProject: result.data,
-            panel: <ProjectPanel project={result.data} showProject={this.showProject} deleteProject={this.deleteProject} />
+            panel: <ProjectPanel project={result.data} showProject={this.showProject} 
+            deleteProject={this.deleteProject} updateProject={this.updateProject} />
         })
     }
 
