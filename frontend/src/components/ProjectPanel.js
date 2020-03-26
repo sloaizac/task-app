@@ -47,6 +47,7 @@ export default class ProjectPanel extends React.Component {
 
     addTask = async (newTask) => {
         await axios.post('http://localhost:4000/tasks', newTask);
+        //this.reset();
         this.props.showProject(this.props.project.id);
     }
 
@@ -74,14 +75,16 @@ export default class ProjectPanel extends React.Component {
     }
 
     handleClickAddTasks = () => {
+
         this.setState({
-            panel: <TaskForm project_id={this.state.id} addTask={this.addTask}
-                reset={this.reset} />
-        });
-    }
+            panel: <TaskForm project_id={this.state.id} addTask={this.addTask} />
+        }, () => console.log(this.state.panel)
+        
+        );
+    } 
 
     displayTaskCard = (id) => {
-        let taskIndex = this.props.project.tasks.map(t => { return t.id }).indexOf(id);
+        let taskIndex = this.props.project.tasks.map(t => {return t.id}).indexOf(id);
         let temp = this.state.displayTaskCard;
         temp[taskIndex] = !this.state.displayTaskCard[taskIndex];
         this.setState({
@@ -111,7 +114,7 @@ export default class ProjectPanel extends React.Component {
                         <button className="btn btn-outline-danger m-1" onClick={() => this.deleteAlert(this.props.project.id)}>
                             Delete
                         </button>
-                        <button className="btn btn-outline-success m-1" onClick={this.handleClickAddTasks}>
+                        <button className="btn btn-outline-success m-1" onClick={() => this.handleClickAddTasks()}>
                             Add tasks
                         </button>
                     </div>

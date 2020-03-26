@@ -14,7 +14,6 @@ class TaskForm extends React.Component {
         event.preventDefault();
         const newTask = { project_id: this.props.project_id, title: this.state.title, description: this.state.description };
         this.props.addTask(newTask);
-        this.props.reset();
     }
 
 
@@ -24,6 +23,7 @@ class TaskForm extends React.Component {
         })
     }
 
+
     /*onChangeDate = (date) => {
         this.setState({
             date: date
@@ -31,6 +31,7 @@ class TaskForm extends React.Component {
     }*/
 
     render() {
+        console.log(this.props.project_id);
         return (
             <div className="card col-4">
                 <form>
