@@ -9,6 +9,7 @@ router.route('/')
 
     
 router.route('/:id')  
+    .put(notesCtrl.updateNote)
     .delete(notesCtrl.deleteNote)
     
 module.exports = router;

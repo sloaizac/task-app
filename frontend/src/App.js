@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Components
 import Navigation from './components/Navigation';
-import Notes from './components/Notes';
+import NotesList from './components/NotesList';
 import ProjectList from './components/ProjectList';
 
 class App extends React.Component {
@@ -13,7 +13,7 @@ class App extends React.Component {
     return <div >
       <Router>
         <Navigation />
-        <Route exact path='/' component={Notes}/>
+        <Route exact path='/' component={NotesList}/>
         <Route path='/projects' component={ProjectList}/>
       </Router>
     </div>

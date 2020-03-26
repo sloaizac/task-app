@@ -1,9 +1,10 @@
 import React from "react";
 import axios from "axios";
-
 import NoteForm from './NoteForm';
+import NoteCard from './NoteCard';
 
-export default class Notes extends React.Component {
+
+export default class NotesList extends React.Component {
 
     state = {
         notes: [],
@@ -40,15 +41,17 @@ export default class Notes extends React.Component {
     }
 
     deleteNote = async (id) => {
-        const result = await axios.delete('http://localhost:4000/notes/' + id);
-        console.log(result);
+        await axios.delete('http://localhost:4000/notes/' + id);
         this.getNotes();
     }
 
-
+    updateNote = async (id, newNote) => {
+        await axios.put('http://localhost:4000/notes/' + id, newNote);
+        this.getNotes();
+    }
 
     render() {
-
+     
         return (
             <div className="container pt-2">
                 <div className="row">
@@ -60,17 +63,7 @@ export default class Notes extends React.Component {
                 <div className="row mt-2">
                     {
                         this.state.notes.map((n) => (
-                            <div className="card m-2 col-3" key={n.id}>
-                                <div className="card-header">
-                                    <h6>{n.title}</h6>
-                                </div>
-                                <div className="card-body">
-                                    {n.description}
-                                </div>
-                                <button className="btn card-footer" onClick={() => this.deleteNote(n.id)}>
-                                    <img src="trash.png" alt="delete" width="20" height="20" />
-                                </button>
-                            </div>
+                            <NoteCard n={n} deleteNote={this.deleteNote} key={n.id} updateNote={this.updateNote} />
                         ))
                     }
                 </div>

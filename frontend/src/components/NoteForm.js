@@ -20,7 +20,10 @@ export default class NoteForm extends React.Component {
 
     render() {
         return (
-            <div className="card col-4">
+            <div className="card col-4 mt-2">
+                <div className="card-header">
+                    Create note
+                </div>
                 <form className="m-2">
                     <div className="form-group">
                         <input type="text" className="form-control"

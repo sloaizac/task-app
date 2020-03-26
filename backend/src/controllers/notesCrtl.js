@@ -44,4 +44,16 @@ notesCtrl.deleteNote = async (req, res) => {
     }
 }
 
+notesCtrl.updateNote = async (req, res) => {
+    const {id, title, description} = req.body;
+    let sql = "UPDATE notes SET title = ? , description =  ? WHERE id = " + id;
+    let values = [title, description];
+    await db.query(sql, values, (err, result) => {
+        if(err){
+            throw err;
+        }
+        res.send("Sucessfully query");
+    })
+}
+
 module.exports = notesCtrl;
