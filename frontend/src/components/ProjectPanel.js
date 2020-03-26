@@ -23,6 +23,7 @@ export default class ProjectPanel extends React.Component {
 
 
     static getDerivedStateFromProps(props, state) {
+        
         const barState = () => {
             let totalTask = props.project.tasks.length;
             let doneTasks = 0;
@@ -36,9 +37,10 @@ export default class ProjectPanel extends React.Component {
 
         if (props.project.id !== state.id ||
             props.project.tasks.length !== state.displayTaskCard.length || barState() !== state.barState) {
-            return {
+                return {
                 id: props.project.id,
                 barState: barState(),
+                displayTaskCard: new Array(props.project.tasks.length).fill(false),
                 panel: ""
             }
         }
@@ -47,7 +49,6 @@ export default class ProjectPanel extends React.Component {
 
     addTask = async (newTask) => {
         await axios.post('http://localhost:4000/tasks', newTask);
-        //this.reset();
         this.props.showProject(this.props.project.id);
     }
 
@@ -75,12 +76,7 @@ export default class ProjectPanel extends React.Component {
     }
 
     handleClickAddTasks = () => {
-
-        this.setState({
-            panel: <TaskForm project_id={this.state.id} addTask={this.addTask} />
-        }, () => console.log(this.state.panel)
-        
-        );
+        this.setState({panel: <TaskForm project_id={this.state.id} addTask={this.addTask} />});
     } 
 
     displayTaskCard = (id) => {
@@ -91,12 +87,6 @@ export default class ProjectPanel extends React.Component {
             displayTaskCard: temp
         })
         return this.state.displayTaskCard[taskIndex];
-    }
-
-    reset = () => {
-        this.setState({
-            panel: ""
-        });
     }
 
 
