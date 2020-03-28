@@ -20,6 +20,7 @@ app.use(require('./routes/index'));
 app.use('/projects', require('./routes/projects'));
 app.use('/tasks', require('./routes/tasks'));
 app.use('/notes', require('./routes/notes'));
+app.use('/events', require('./routes/events'));
 
 //static files  
   

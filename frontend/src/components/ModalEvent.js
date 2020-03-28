@@ -1,14 +1,64 @@
 import React from "react";
+import TimePicker from "rc-time-picker";
+
+import "rc-time-picker/assets/index.css";
 
 
 export default class ModalEvent extends React.Component {
 
+    state = {
+        id: this.props.id,
+        title: "",
+        start: this.props.start._d,
+        end: this.props.end._d
+    }
+
+    onSubmit = () => {
+        console.log(this.state.start);
+        
+        const newEvent = {
+            title: this.state.title,
+            start: this.state.start,
+            end: this.state.end
+        }
+        this.props.addEvent(newEvent);
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        if(props.id !== state.id)
+        {
+            return {
+                id: props.id,
+                title: "",
+                start: props.start._d,
+                end: props.end._d
+            }
+        }
+        return null; 
+
+    }
+
+    onChangeStart = ({ _d }) => {
+        this.setState({
+            start: _d
+        })
+
+    }
+
+    onChangeEnd = ({ _d }) => {
+        this.setState({
+            end: _d
+        })
+    }
+
+    onChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
     render() {
         if (this.props.show) {
-
-
-            console.log("aca");
-
             // The gray background
             const backdropStyle = {
                 position: 'fixed',
@@ -40,16 +90,32 @@ export default class ModalEvent extends React.Component {
                             <div className="card-body">
                                 <form className="m-2">
                                     <div className="form-group">
-                                        <input name="title" type="text" className="form-control" placeholder="Event title" />
+                                        <input name="title" type="text" className="form-control" placeholder="Event title" value={this.state.title} onChange={this.onChange} />
                                     </div>
                                     <div className="form-group">
-                                        <textarea name="description"  className="form-control" placeholder="description" ></textarea>
+                                        <label className="m-1 p-1" >start:</label>
+                                        <TimePicker
+                                            defaultValue={this.props.start}
+                                            showSecond={false}
+                                            onChange={this.onChangeStart}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="m-1 p-1" >end:</label>
+                                        <TimePicker
+                                            defaultValue={this.props.end}
+                                            showSecond={false}
+                                            onChange={this.onChangeEnd}
+                                        />
                                     </div>
                                 </form>
                             </div>
                             <div className="card-footer">
-                                <button className="btn btn-secondary" onClick={this.props.onClose}>
-                                    Close
+                                <button className="btn btn-primary m-2" onClick={this.onSubmit}>
+                                    Create event
+                                </button>
+                                <button className="btn btn-secondary m-2" onClick={this.props.onClose}>
+                                    Cancel
                                 </button>
                             </div>
                         </div>

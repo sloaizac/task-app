@@ -41,3 +41,14 @@ CREATE TABLE notes(
 
 ALTER TABLE tasks ADD done BOOLEAN NOT NULL DEFAULT false AFTER description;
 ALTER TABLE tasks MODIFY description VARCHAR(255) DEFAULT " ";
+
+CREATE TABLE events(
+    id INT(9) NOT NULL AUTO_INCREMENT,
+    user_id INT(6) NOT NULL,
+    title VARCHAR(50) NOT NULL,
+    start DATETIME NOT NULL,
+    end DATETIME NOT NULL,
+    created_at timestamp NOT NULL DEFAULT current_timestamp,
+    CONSTRAINT fk_user_events FOREIGN KEY (user_id) REFERENCES users(id),
+    PRIMARY KEY(id)
+);

@@ -12,6 +12,7 @@ export default class Navigation extends React.Component {
                     </Link>
                 </div>
                 <div className="container d-flex justify-content-start ml-2 p-0">
+                    <Link className="navbar-brand" to="/">Notes</Link>
                     <Link className="navbar-brand" to="/projects">Projects</Link>
                     <Link className="navbar-brand" to="/calendar">Calendar</Link>
                 </div>
