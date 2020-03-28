@@ -31,34 +31,65 @@ class TaskForm extends React.Component {
     }*/
 
     render() {
-        console.log(this.props.project_id);
-        return (
-            <div className="card col-4">
-                <form>
-                <div className="card-header">
-                    <h5>Create tasks</h5>
-                </div>
-                <div className="form-group">
-                    <input type="text"
-                        name="title"
-                        className="form-control"
-                        placeholder="write a title"
-                        onChange={this.onChange} />
-                </div>
-                <div className="form-group">
-                    <textarea
-                        placeholder="Write a description"
-                        name="description"
-                        className="form-control"
-                        onChange={this.onChange}
-                    ></textarea>
-                </div>
+        if (this.props.show) {
 
-                    <button type="submit" className="btn btn-primary" onClick={this.onSubmit}>Save</button>
-                </form>
-            </div>
+            // The gray background
+            const backdropStyle = {
+                position: 'fixed',
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                backgroundColor: 'rgba(0,0,0,0.3)'
+            };
 
-        );
+            // The modal "window"
+            const modalStyle = {
+                position: "initial",
+                borderRadius: 5,
+                maxWidth: 500,
+                minHeight: 300,
+                margin: '0 auto',
+                padding: 30,
+                display: "block"
+            };
+
+            return (
+                <div className="backdrop" style={backdropStyle}>
+                    <div className="modal" style={modalStyle}>
+                        <div className="card">
+                            <div className="card-header">
+                                <h3>Create tasks</h3>
+                            </div>
+                            <div className="card-body">
+                                <form>
+                                    <div className="form-group">
+                                        <input type="text"
+                                            name="title"
+                                            className="form-control"
+                                            placeholder="write a title"
+                                            onChange={this.onChange} />
+                                    </div>
+                                    <div className="form-group">
+                                        <textarea
+                                            placeholder="Write a description"
+                                            name="description"
+                                            className="form-control"
+                                            onChange={this.onChange}
+                                        ></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div className="card-footer">
+                                <button type="submit" className="btn btn-primary m-2" onClick={this.onSubmit}>Save</button>
+                                <button type="submit" className="btn btn-secondary m-2" onClick={this.props.onClose}>Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        return null;
     }
 }
 

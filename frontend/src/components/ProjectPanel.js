@@ -14,7 +14,7 @@ export default class ProjectPanel extends React.Component {
             description: props.project.description,
             doneButton: "",
             displayTaskCard: [],
-            panel: "",
+            panel: false,
             barState: 0
         }
     }
@@ -49,7 +49,7 @@ export default class ProjectPanel extends React.Component {
                 doneButton: "",
                 barState: barState(),
                 displayTaskCard: new Array(props.project.tasks.length).fill(false),
-                panel: ""
+                panel: false
             }
         }
         return null
@@ -84,7 +84,7 @@ export default class ProjectPanel extends React.Component {
     }
 
     handleClickAddTasks = () => {
-        this.setState({ panel: <TaskForm project_id={this.state.id} addTask={this.addTask} /> });
+        this.setState({ panel: true });
     }
 
     displayTaskCard = (id) => {
@@ -115,6 +115,12 @@ export default class ProjectPanel extends React.Component {
             doneButton: <button className="btn btn-success btn-sm" onClick={this.save}>done</button>
         })
 
+    }
+
+    onClose = () => {
+        this.setState({
+            panel: false
+        })
     }
 
     render() {
@@ -163,12 +169,10 @@ export default class ProjectPanel extends React.Component {
                         ))}
                     </ul>
                 </div>
-                <div className="container">
-                    {this.state.panel}
-                </div>
                 <div className="progress col-9 mt-5">
                     <div className="progress-bar" role="progressbar" style={barStyle} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{this.state.barState}%</div>
                 </div>
+                <TaskForm project_id={this.state.id} addTask={this.addTask} show={this.state.panel} onClose={this.onClose} />
             </div>
         )
     }

@@ -8,7 +8,7 @@ export default class NotesList extends React.Component {
 
     state = {
         notes: [],
-        noteForm: ""
+        noteForm: false
     }
 
     componentDidMount() {
@@ -20,7 +20,7 @@ export default class NotesList extends React.Component {
         this.setState(
             {
                 notes: result.data,
-                noteForm: ""
+                noteForm: false
             }
         )
     }
@@ -36,7 +36,7 @@ export default class NotesList extends React.Component {
 
     noteForm() {
         this.setState({
-            noteForm: <NoteForm addNote={this.addNote} />
+            noteForm: true
         })
     }
 
@@ -48,6 +48,12 @@ export default class NotesList extends React.Component {
     updateNote = async (id, newNote) => {
         await axios.put('http://localhost:4000/notes/' + id, newNote);
         this.getNotes();
+    }
+
+    onClose = () => {
+        this.setState({
+            noteForm: false
+        })
     }
 
     render() {
@@ -67,9 +73,7 @@ export default class NotesList extends React.Component {
                         ))
                     }
                 </div>
-                <div>
-                    {this.state.noteForm}
-                </div>
+                <NoteForm addNote={this.addNote} show={this.state.noteForm} onClose={this.onClose} />
             </div>
         )
     }
