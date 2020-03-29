@@ -46,8 +46,8 @@ CREATE TABLE events(
     id INT(9) NOT NULL AUTO_INCREMENT,
     user_id INT(6) NOT NULL,
     title VARCHAR(50) NOT NULL,
-    start DATETIME NOT NULL,
-    end DATETIME NOT NULL,
+    start VARCHAR(100) NOT NULL,
+    end VARCHAR(100) NOT NULL,
     created_at timestamp NOT NULL DEFAULT current_timestamp,
     CONSTRAINT fk_user_events FOREIGN KEY (user_id) REFERENCES users(id),
     PRIMARY KEY(id)

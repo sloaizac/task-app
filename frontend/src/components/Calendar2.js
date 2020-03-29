@@ -24,13 +24,15 @@ export default class Calendar2 extends React.Component {
     end: moment()
   }
 
-  /*
+  componentDidMount(){
+    this.getEvents();
+  }
+
+  
   getEvents = async () => {
     const res =  await axios.get("http://localhost:4000/events");
     const a = []
     res.data.map((e) => {   
-      console.log(e.start);
-      
       return (a.push({
         title: e.title,
         start: new Date(e.start),
@@ -43,17 +45,12 @@ export default class Calendar2 extends React.Component {
     this.setState({
       events: a
     })
-  }*/
+  }
 
   addEvent = async (newEvent) =>{
-      //await axios.post("http://localhost:4000/events", newEvent);
-      const n =  this.state.events;
-      n.push(newEvent);
-      this.setState({
-        events: n
-      })
+      await axios.post("http://localhost:4000/events", newEvent);
       this.onClose();
-      //this.getEvents();
+      this.getEvents();
   }
 
   handleSelect = ({start, end}) => {
