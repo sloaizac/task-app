@@ -17,6 +17,8 @@ export default class NotesList extends React.Component {
 
     getNotes = async () => {
         const result = await axios.get('http://localhost:4000/notes');
+        console.log(result);
+        
         this.setState(
             {
                 notes: result.data,
