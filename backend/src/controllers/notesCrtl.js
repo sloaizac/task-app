@@ -3,6 +3,8 @@ const db = require('../db/database');
 notesCtrl = {};
 
 notesCtrl.getNotes = async (req, res) => {
+    console.log(req.user);
+    
     let sql = "SELECT * FROM notes WHERE user_id = " + 1;
     await db.query(sql, (err, result) => {
         if (err) {

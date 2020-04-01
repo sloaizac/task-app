@@ -8,8 +8,6 @@ passport.use(new LocalStrategy({
     usernameField: "username",
     passwordField: "password"
 }, async (username, password, done) => {
- 
-
     
     let sql = "SELECT * FROM users WHERE username = ? AND password = ?";
     let values = [username, password]

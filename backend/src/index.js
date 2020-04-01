@@ -4,8 +4,9 @@ const cors = require("cors");
 const session = require("express-session");
 const flash =  require("express-flash");
 const passport = require("passport");
+const FileStore = require('session-file-store')(session);
 require("./passport/passport");
-//const isAutheticated =  require("./middelwares/session");
+
 
 //settings
 
@@ -17,6 +18,7 @@ app.set('port', process.env.PORT || 4000);
 app.use(cors());
 app.use(express.json()); 
 app.use(session({
+    store: new FileStore,
     secret: "secretapp4532",
     resave: false,
     saveUninitialized: false
