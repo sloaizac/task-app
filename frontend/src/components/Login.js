@@ -13,9 +13,15 @@ export default class Login extends React.Component {
             username: this.state.username,
             password: this.state.password
         }
-        const res =  await axios.post("http://localhost:4000/login", login)
-        window.$user =  res;
-        console.log(window.$user);
+        await axios.post("http://localhost:4000/login", login)
+        .then(response => {
+            localStorage.setItem('user', response.data);
+            window.location.href = '/notes';
+          })
+          .catch(err => {
+            console.log(err)
+            window.location.href = '/login';
+          })
         
     }
     

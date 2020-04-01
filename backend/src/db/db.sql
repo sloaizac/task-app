@@ -52,3 +52,5 @@ CREATE TABLE events(
     CONSTRAINT fk_user_events FOREIGN KEY (user_id) REFERENCES users(id),
     PRIMARY KEY(id)
 );
+
+ ALTER TABLE users ADD email VARCHAR(50) NOT NULL AFTER username;

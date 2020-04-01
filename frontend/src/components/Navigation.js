@@ -3,10 +3,13 @@ import { Link } from "react-router-dom";
 
 export default class Navigation extends React.Component {
 
-    render() {
-        console.log(window.$user);
-        
-        if(window.$user){
+    logOut() {
+        localStorage.removeItem('user');
+        window.location.href = '/';
+      }
+
+    render() {    
+        if(localStorage.user){
             return (
                 < nav className="navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-between ">
                     <div className="d-flex justify-content-start">
@@ -22,7 +25,7 @@ export default class Navigation extends React.Component {
                     </div>
                     </div>
                     <div>
-                        <button className="btn btn-success">
+                        <button className="btn btn-success" onClick={this.logOut} >
                             Logout
                         </button>
                     </div>
@@ -39,8 +42,11 @@ export default class Navigation extends React.Component {
                         </div>
                         </div>
                         <div>
-                            <Link className="btn btn-success" to="/login" >
+                            <Link className="btn btn-success m-2" to="/login" >
                                 Login
+                            </Link>
+                            <Link className="btn btn-success m-2" to="/register" >
+                                Register
                             </Link>
                         </div>
                     </nav >                

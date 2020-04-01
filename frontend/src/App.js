@@ -2,19 +2,13 @@ import React from 'react';
 import { BrowserRouter as Router, Route} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
-
-
 // Components
 import Navigation from './components/Navigation';
 import NotesList from './components/NotesList';
 import ProjectList from './components/ProjectList';
 import Calendar from './components/Calendar2';
 import Login from './components/Login';
-
-
-window.$user = null;
-
+import Register from './components/Register';
 
 class App extends React.Component {
 
@@ -26,6 +20,7 @@ class App extends React.Component {
         <Route path='/projects' component={ProjectList}/>
         <Route path='/calendar' component={Calendar}/>
         <Route path='/login' component={Login}/>
+        <Route path='/register' component={Register}/>
       </Router>
     </div>
   }
