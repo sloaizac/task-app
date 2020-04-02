@@ -3,11 +3,17 @@ const router = Router();
 const passport = require("passport");
 const db = require("../db/database");
 
-router.post('/login', passport.authenticate('local'), (req, res) => res.json({ user: req.user }));
+router.post('/login', passport.authenticate('local'), (req, res) => {
+    res.json({ user: req.user })
+});
 
 router.post('/logout', (req, res) => {
-    req.logOut();
-    res.redirect('/login');
+    try{
+        req.session.destroy();
+        res.json({message: "logout successfully"})
+    }catch(e){
+        res.send(e);
+    }
 });
 
 router.post('/register', async (req, res) => {

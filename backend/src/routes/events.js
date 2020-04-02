@@ -1,10 +1,10 @@
 const {Router} = require('express');
 const router = Router();
-
+const {isAuthenticated} = require("../helpers/auth");
 const eventsCtrl = require('../controllers/eventsCtrl');
 
 router.route('/')
-    .get(eventsCtrl.getEvents)
+    .get(isAuthenticated, eventsCtrl.getEvents)
     .post(eventsCtrl.createEvent)
 
     

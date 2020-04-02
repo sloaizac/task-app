@@ -1,6 +1,6 @@
 const {Router} = require("express");
 const router = Router();
-
+const {isAuthenticated} = require("../helpers/auth");
 const tasksCrtl = require("../controllers/tasksCtrl");
 
 router.route('/')
@@ -8,7 +8,7 @@ router.route('/')
 
     
 router.route('/:id')
-    .get(tasksCrtl.getTasks) 
+    .get(isAuthenticated, tasksCrtl.getTasks) 
     .put(tasksCrtl.updateTask)   
     .delete(tasksCrtl.deleteTask)
     

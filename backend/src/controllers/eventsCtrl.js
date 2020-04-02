@@ -3,8 +3,9 @@ const db = require('../db/database');
 eventsCtrl = {};
 
 eventsCtrl.getEvents = async (req, res) => {
-    let sql = "SELECT * FROM events";
-    await db.query(sql, (err, result) => {
+    let sql = "SELECT * FROM events WHERE user_id = ?";
+    let values = [req.user.id];
+    await db.query(sql, values, (err, result) => {
         if (err) {
             throw err;
         }
@@ -16,7 +17,7 @@ eventsCtrl.createEvent = async (req, res) => {
     try {
         const {title, start, end} = req.body;
         let sql = "INSERT INTO events (user_id, title, start, end) VALUES (?, ?, ?, ?)";
-        let values = [1, title, start, end];
+        let values = [req.user.id, title, start, end];
         await db.query(sql, values,(err, result) => {
             if (err) {
                 throw err;

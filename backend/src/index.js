@@ -2,9 +2,10 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const session = require("express-session");
+const FileStore = require("session-file-store")(session);
 const flash =  require("express-flash");
 const passport = require("passport");
-const FileStore = require('session-file-store')(session);
+
 require("./passport/passport");
 
 
@@ -18,10 +19,10 @@ app.set('port', process.env.PORT || 4000);
 app.use(cors());
 app.use(express.json()); 
 app.use(session({
-    store: new FileStore,
+    store: new FileStore(),
     secret: "secretapp4532",
-    resave: false,
-    saveUninitialized: false
+    resave: true,
+    saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
