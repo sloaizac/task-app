@@ -1,15 +1,15 @@
 const {Router} = require("express");
 const router = Router();
-const {isAuthenticated} = require("../helpers/auth");
+const {withAuth} = require('../middlewares/middlewares');
 const projectsCrtl = require("../controllers/projectsCtrl");
 
 router.route('/')
-    .get(isAuthenticated, projectsCrtl.getProjects)
+    .get(withAuth, projectsCrtl.getProjects)
     .post(projectsCrtl.createProject)
 
     
 router.route('/:id')
-    .get(isAuthenticated, projectsCrtl.getProject)    
+    .get(withAuth, projectsCrtl.getProject)    
     .put(projectsCrtl.updateProject)
     .delete(projectsCrtl.deleteProject)
     

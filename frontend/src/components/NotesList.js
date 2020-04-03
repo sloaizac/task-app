@@ -16,15 +16,15 @@ export default class NotesList extends React.Component {
     }
 
     getNotes = async () => {
-        const result = await axios.get('http://localhost:4000/notes');
+        const result = await axios.get('http://localhost:4000/notes', { params: { 'x-access-token': localStorage.getItem('user')} });
         console.log(result);
         
-        this.setState(
+      /*  this.setState(
             {
                 notes: result.data,
                 noteForm: false
             }
-        )
+        )*/
     }
 
     addNote = async (note_title, note_description) => {

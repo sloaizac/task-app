@@ -1,10 +1,10 @@
 const {Router} = require('express');
 const router = Router();
-const {isAuthenticated} = require("../helpers/auth");
+const {withAuth} = require('../middlewares/middlewares');
 const notesCtrl = require('../controllers/notesCrtl');
 
 router.route('/')
-    .get(isAuthenticated, notesCtrl.getNotes)
+    .get(withAuth, notesCtrl.getNotes)
     .post(notesCtrl.createNote)
 
     

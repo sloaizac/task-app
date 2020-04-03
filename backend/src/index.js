@@ -1,12 +1,9 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const session = require("express-session");
-const FileStore = require("session-file-store")(session);
+const cookieParser = require("cookie-parser");
 const flash =  require("express-flash");
-const passport = require("passport");
 
-require("./passport/passport");
 
 
 //settings
@@ -16,17 +13,14 @@ app.set('port', process.env.PORT || 4000);
 
 //middlewares
 
-app.use(cors());
-app.use(express.json()); 
-app.use(session({
-    store: new FileStore(),
-    secret: "secretapp4532",
-    resave: true,
-    saveUninitialized: true
+app.use(cors({
+    credentials: true,
+    origin:"http://localhost:3000"
 }));
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(express.json()); 
+app.use(cookieParser());
 app.use(flash());
+
 
 //global variables 
 

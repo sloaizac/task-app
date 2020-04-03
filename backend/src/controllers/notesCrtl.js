@@ -5,7 +5,7 @@ notesCtrl = {};
 notesCtrl.getNotes = async (req, res) => {
     
     let sql = "SELECT * FROM notes WHERE user_id = ?" ;
-    let values = [req.user[0].id];
+    let values = [1];
     
     await db.query(sql, values, (err, result) => {
         if (err) {
@@ -19,7 +19,7 @@ notesCtrl.createNote = async (req, res) => {
     try {
         const {title, description} = req.body;
         let sql = "INSERT INTO notes (user_id, title, description) VALUES (?, ?, ?)";
-        let values = [req.user[0].id, title, description];
+        let values = [1, title, description];
         await db.query(sql, values,(err, result) => {
             if (err) {
                 throw err;
