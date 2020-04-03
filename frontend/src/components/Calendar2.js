@@ -1,7 +1,8 @@
 import React from "react";
 import moment from "moment";
 import axios from "axios";
-import { Calendar, momentLocalizer, Views} from 'react-big-calendar';
+import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
+import { isAuthenticated } from "../validation";
 import ModalEvent from "./ModalEvent";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
@@ -24,15 +25,15 @@ export default class Calendar2 extends React.Component {
     end: moment()
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getEvents();
   }
 
-  
   getEvents = async () => {
-    const res =  await axios.get("http://localhost:4000/events");
+    const res = await axios.get("http://localhost:4000/events", 
+    { params: { 'access-token': localStorage.getItem('access-token') } });
     const a = []
-    res.data.map((e) => {   
+    res.data.map((e) => {
       return (a.push({
         title: e.title,
         start: new Date(e.start),
@@ -47,13 +48,13 @@ export default class Calendar2 extends React.Component {
     })
   }
 
-  addEvent = async (newEvent) =>{
-      await axios.post("http://localhost:4000/events", newEvent);
-      this.onClose();
-      this.getEvents();
+  addEvent = async (newEvent) => {
+    await axios.post("http://localhost:4000/events", newEvent);
+    this.onClose();
+    this.getEvents();
   }
 
-  handleSelect = ({start, end}) => {
+  handleSelect = ({ start, end }) => {
     this.setState({
       id: !this.state.id,
       form: true,
@@ -72,20 +73,25 @@ export default class Calendar2 extends React.Component {
 
     return (
       <div className="m-4">
-        <div style={style} className="bigCalendar-container">
-          <Calendar
-            selectable
-            defaultView={Views.WEEK}
-            scrollToTime={new Date(1970, 1, 1, 5)}
-            localizer={localizer}
-            events={this.state.events}
-            startAccessor="start"
-            endAccessor="end"
-            onSelectSlot={this.handleSelect}
-          />
-        </div>
-        <ModalEvent show={this.state.form} onClose={this.onClose} start={this.state.start} 
-        end={this.state.end} addEvent={this.addEvent} id={this.state.id} >Hello</ModalEvent>
+        {
+          (isAuthenticated()) ? (<div>
+
+            <div style={style} className="bigCalendar-container">
+              <Calendar
+                selectable
+                defaultView={Views.WEEK}
+                scrollToTime={new Date(1970, 1, 1, 5)}
+                localizer={localizer}
+                events={this.state.events}
+                startAccessor="start"
+                endAccessor="end"
+                onSelectSlot={this.handleSelect}
+              />
+            </div>
+            <ModalEvent show={this.state.form} onClose={this.onClose} start={this.state.start}
+              end={this.state.end} addEvent={this.addEvent} id={this.state.id} >Hello</ModalEvent>
+          </div>) : (<h3>Please login</h3>)
+        }
       </div>);
   }
 

@@ -15,17 +15,18 @@ router.post('/login', async (req, res) => {
             throw err
         } else {
             if (result[0]) {
-                bcrypt.compare(password, result[0].password, (err, result) => {
+                bcrypt.compare(password, result[0].password, (err, response) => {
                     if (err) {
                         throw err;
-                    } else if (!result) {
+                    } else if (!response) {
                         res.status(400).json({ message: "password incorrect" });
                     } else {
-                        const payload = {username};
+                        const id = result[0].id;
+                        const payload = {id};
                         const token = jwt.sign(payload, secret, {
-                            expiresIn: '1h'
+                            expiresIn: '2h'
                         });
-                        res.status(200).json({message: "json token", token: token})
+                        res.status(200).json({message: "json token", token: token, user: {id: result[0].id, username: result[0].username}})
 
                     }
                 })

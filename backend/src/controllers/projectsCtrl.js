@@ -5,7 +5,7 @@ const projectsCtrl = {};
 projectsCtrl.getProjects = async (req, res) => {
 
     let sql = "SELECT * FROM projects WHERE user_id = ?";
-    values = [1]
+    values = [req.user]
     await db.query(sql, values, (err, result) => {
         if (err) {
             throw err;
@@ -16,9 +16,9 @@ projectsCtrl.getProjects = async (req, res) => {
 
 projectsCtrl.createProject = async (req, res) => {
     try {
-        const {title, description} = req.body;
+        const {user_id, title, description} = req.body;
         let sql = "INSERT INTO projects (user_id, title, description) VALUES (?, ?, ?)";
-        let values = [1, title, description];
+        let values = [user_id, title, description];
         await db.query(sql, values,(err, result) => {
             if (err) {
                 throw err;

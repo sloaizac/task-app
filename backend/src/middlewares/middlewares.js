@@ -4,7 +4,7 @@ const secret = 'mysecret';
 const middlewares = {};
 
 middlewares.withAuth =(req, res, next) => { 
-  var token = req.body['x-access-token'] || req.query['x-access-token'] || req.headers['x-access-token'];
+  var token = req.body['access-token'] || req.query['access-token'] || req.headers['access-token'];
   if (! token) { 
     res.status(401).json({message: 'No autorizado'}); 
   } else { 
@@ -12,8 +12,8 @@ middlewares.withAuth =(req, res, next) => {
       if (err) { 
         res.status(401).json({message: 'No autorizado'});  
       } else { 
-        req.username = decoded.username; 
-        next (); 
+        req.user = decoded.id; 
+        next(); 
       } 
     }); 
   } 

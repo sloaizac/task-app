@@ -4,7 +4,7 @@ eventsCtrl = {};
 
 eventsCtrl.getEvents = async (req, res) => {
     let sql = "SELECT * FROM events WHERE user_id = ?";
-    let values = [1];
+    let values = [req.user];
     await db.query(sql, values, (err, result) => {
         if (err) {
             throw err;
@@ -15,9 +15,9 @@ eventsCtrl.getEvents = async (req, res) => {
 
 eventsCtrl.createEvent = async (req, res) => {
     try {
-        const {title, start, end} = req.body;
+        const {user_id, title, start, end} = req.body;
         let sql = "INSERT INTO events (user_id, title, start, end) VALUES (?, ?, ?, ?)";
-        let values = [1, title, start, end];
+        let values = [user_id, title, start, end];
         await db.query(sql, values,(err, result) => {
             if (err) {
                 throw err;

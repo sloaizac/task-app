@@ -2,10 +2,9 @@ const db = require('../db/database');
 
 notesCtrl = {};
 
-notesCtrl.getNotes = async (req, res) => {
-    
+notesCtrl.getNotes = async (req, res) => { 
     let sql = "SELECT * FROM notes WHERE user_id = ?" ;
-    let values = [1];
+    let values = [req.user];
     
     await db.query(sql, values, (err, result) => {
         if (err) {
@@ -17,9 +16,9 @@ notesCtrl.getNotes = async (req, res) => {
 
 notesCtrl.createNote = async (req, res) => {
     try {
-        const {title, description} = req.body;
+        const {user_id, title, description} = req.body;
         let sql = "INSERT INTO notes (user_id, title, description) VALUES (?, ?, ?)";
-        let values = [1, title, description];
+        let values = [user_id, title, description];
         await db.query(sql, values,(err, result) => {
             if (err) {
                 throw err;

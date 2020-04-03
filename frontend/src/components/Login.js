@@ -14,13 +14,13 @@ export default class Login extends React.Component {
             password: this.state.password
         }
         await axios.post("http://localhost:4000/login", login)
-        .then(response => {
-            console.log(response.data.token);
-            
-            localStorage.setItem('user', response.data.token);
-           // window.location.href = '/notes';
+        .then(response => {          
+            localStorage.setItem('access-token', response.data.token);
+            localStorage.setItem('user', response.data.user.id);
+            localStorage.setItem('access-token-expiration', Date.now() + 2 * 60 * 60 * 1000);
+            //window.location.href = '/notes';
           })
-          .catch(err => {
+          .catch(err => { 
             console.log(err)
             window.location.href = '/login';
           })

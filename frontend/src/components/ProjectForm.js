@@ -12,7 +12,7 @@ class ProjectForm extends React.Component {
 
     onSubmit = async (event) => {
         event.preventDefault();
-        const newProject = { title: this.state.title, description: this.state.description }
+        const newProject = {user_id: localStorage.getItem('user'), title: this.state.title, description: this.state.description }
         await axios.post('http://localhost:4000/projects', newProject)
         this.props.getProjects()
         

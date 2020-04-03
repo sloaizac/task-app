@@ -17,6 +17,7 @@ export default class ModalEvent extends React.Component {
         console.log(this.state.start);
         
         const newEvent = {
+            user_id: localStorage.getItem('user'),
             title: this.state.title,
             start: this.state.start,
             end: this.state.end
