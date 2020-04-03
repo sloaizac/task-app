@@ -18,7 +18,7 @@ export default class Login extends React.Component {
             localStorage.setItem('access-token', response.data.token);
             localStorage.setItem('user', response.data.user.id);
             localStorage.setItem('access-token-expiration', Date.now() + 2 * 60 * 60 * 1000);
-            //window.location.href = '/notes';
+            window.location.href = '/';
           })
           .catch(err => { 
             console.log(err)

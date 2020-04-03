@@ -38,11 +38,11 @@ class ProjectForm extends React.Component {
             </div>
             <form className="p-2">
                 <div className="form-group">
-                    <label for="name" >Project title</label>
+                    <label>Project title</label>
                     <input type="text" onChange={this.onChange} name="title" id="name" className="form-control" />
                 </div>
                 <div className="form-group">
-                    <label for="description" >Description</label>
+                    <label>Description</label>
                     <textarea onChange={this.onChange} name="description" id="description" className="form-control" />
                 </div> 
                 <button type="submit" className="btn btn-primary" onClick={this.onSubmit}>Create</button>   

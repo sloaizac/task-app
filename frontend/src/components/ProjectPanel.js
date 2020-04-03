@@ -42,6 +42,7 @@ export default class ProjectPanel extends React.Component {
 
         if (props.project.id !== state.id ||
             props.project.tasks.length !== state.displayTaskCard.length || barState() !== state.barState) {
+                
             return {
                 id: props.project.id,
                 title: props.project.title,
@@ -49,7 +50,7 @@ export default class ProjectPanel extends React.Component {
                 doneButton: "",
                 barState: barState(),
                 displayTaskCard: new Array(props.project.tasks.length).fill(false),
-                panel: false
+                //panel: false
             }
         }
         return null
@@ -58,6 +59,7 @@ export default class ProjectPanel extends React.Component {
     addTask = async (newTask) => {
         await axios.post('http://localhost:4000/tasks', newTask);
         this.props.showProject(this.props.project.id);
+        this.onClose();
     }
 
 
@@ -83,7 +85,7 @@ export default class ProjectPanel extends React.Component {
         this.props.showProject(this.props.project.id);
     }
 
-    handleClickAddTasks = () => {
+    handleClickAddTasks = () => {      
         this.setState({ panel: true });
     }
 
@@ -109,7 +111,7 @@ export default class ProjectPanel extends React.Component {
         })
     }
 
-    onChange = (e) => {
+    onChange = (e) => {  
         this.setState({
             [e.target.name]: e.target.value,
             doneButton: <button className="btn btn-success btn-sm" onClick={this.save}>done</button>
@@ -152,7 +154,7 @@ export default class ProjectPanel extends React.Component {
                         <button className="btn btn-outline-danger m-1" onClick={() => this.deleteAlert(this.props.project.id)}>
                             Delete
                         </button>
-                        <button className="btn btn-outline-success m-1" onClick={() => this.handleClickAddTasks()}>
+                        <button className="btn btn-outline-success m-1" onClick={this.handleClickAddTasks}>
                             Add tasks
                         </button>
                     </div>

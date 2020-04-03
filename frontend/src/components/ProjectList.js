@@ -57,9 +57,9 @@ export default class ProjectList extends React.Component {
 
     render() {
         return (
-            <div className="container row m-3">
+            <div>
                 {
-                    (isAuthenticated()) ? (<div>
+                    (isAuthenticated()) ? (<div className="container row m-3">
                         <div className="row col-12">
                             <h2>Projects</h2>
                             <button className="btn btn-success ml-4" onClick={() => this.addProject()}>
