@@ -62,7 +62,8 @@ export default class ModalEvent extends React.Component {
         if (this.props.show) {
             // The gray background
             const backdropStyle = {
-                position: 'fixed',
+                position: 'absolute',
+                zIndex: "100",
                 top: 0,
                 bottom: 0,
                 left: 0,
