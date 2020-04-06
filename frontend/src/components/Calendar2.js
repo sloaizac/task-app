@@ -19,6 +19,8 @@ export default class Calendar2 extends React.Component {
 
   state = {
     id: false,
+    edit: false,
+    title: "",
     events: [],
     form: false,
     start: moment(),
@@ -30,8 +32,8 @@ export default class Calendar2 extends React.Component {
   }
 
   getEvents = async () => {
-    const res = await axios.get("http://localhost:4000/events", 
-    { params: { 'access-token': localStorage.getItem('access-token') } });
+    const res = await axios.get("http://localhost:4000/events",
+      { params: { 'access-token': localStorage.getItem('access-token') } });
     const a = []
     res.data.map((e) => {
       return (a.push({
@@ -49,14 +51,46 @@ export default class Calendar2 extends React.Component {
   }
 
   addEvent = async (newEvent) => {
-    await axios.post("http://localhost:4000/events", newEvent);
-    this.onClose();
-    this.getEvents();
+    if (this.state.edit) {
+      await axios.put("http://localhost:4000/events/1", newEvent)
+        .then(res => {
+          this.onClose();
+          this.getEvents();
+        })
+        .catch(err => {   
+          console.log(err);
+        })
+    }else {
+      await axios.post("http://localhost:4000/events", newEvent)
+        .then(res => {
+          this.onClose();
+          this.getEvents();
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+
+
   }
+
+  handleSelectEvent = ({ title, start, end }) => {
+    this.setState({
+      id: !this.state.id,
+      title: title,
+      edit: true,
+      form: true,
+      start: moment(start),
+      end: moment(end)
+    })
+  }
+
 
   handleSelect = ({ start, end }) => {
     this.setState({
       id: !this.state.id,
+      title: "",
+      edit: false,
       form: true,
       start: moment(start),
       end: moment(end)
@@ -85,10 +119,11 @@ export default class Calendar2 extends React.Component {
                 events={this.state.events}
                 startAccessor="start"
                 endAccessor="end"
+                onSelectEvent={event => this.handleSelectEvent(event)}
                 onSelectSlot={this.handleSelect}
               />
             </div>
-            <ModalEvent show={this.state.form} onClose={this.onClose} start={this.state.start}
+            <ModalEvent show={this.state.form} onClose={this.onClose} title={this.state.title} start={this.state.start}
               end={this.state.end} addEvent={this.addEvent} id={this.state.id} >Hello</ModalEvent>
           </div>) : (<h3>Please login</h3>)
         }

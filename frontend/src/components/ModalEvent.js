@@ -10,16 +10,16 @@ export default class ModalEvent extends React.Component {
         id: this.props.id,
         title: "",
         start: this.props.start._d,
+        start_old: this.props.start._d,
         end: this.props.end._d
     }
 
-    onSubmit = () => {
-        console.log(this.state.start);
-        
+    onSubmit = () => {        
         const newEvent = {
             user_id: localStorage.getItem('user'),
             title: this.state.title,
             start: this.state.start,
+            start_old: this.state.start_old,
             end: this.state.end
         }
         this.props.addEvent(newEvent);
@@ -30,8 +30,9 @@ export default class ModalEvent extends React.Component {
         {
             return {
                 id: props.id,
-                title: "",
+                title: props.title,
                 start: props.start._d,
+                start_old: props.start._d,
                 end: props.end._d
             }
         }
