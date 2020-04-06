@@ -19,6 +19,7 @@ export default class Calendar2 extends React.Component {
 
   state = {
     id: false,
+    eventId: "",
     edit: false,
     title: "",
     events: [],
@@ -35,8 +36,9 @@ export default class Calendar2 extends React.Component {
     const res = await axios.get("http://localhost:4000/events",
       { params: { 'access-token': localStorage.getItem('access-token') } });
     const a = []
-    res.data.map((e) => {
-      return (a.push({
+    res.data.map((e) => {   
+     return (a.push({
+        id: e.id,
         title: e.title,
         start: new Date(e.start),
         end: new Date(e.end)
@@ -52,7 +54,7 @@ export default class Calendar2 extends React.Component {
 
   addEvent = async (newEvent) => {
     if (this.state.edit) {
-      await axios.put("http://localhost:4000/events/1", newEvent)
+      await axios.put("http://localhost:4000/events/" + newEvent.eventId, newEvent)
         .then(res => {
           this.onClose();
           this.getEvents();
@@ -74,9 +76,10 @@ export default class Calendar2 extends React.Component {
 
   }
 
-  handleSelectEvent = ({ title, start, end }) => {
+  handleSelectEvent = ({id, title, start, end }) => {
     this.setState({
       id: !this.state.id,
+      eventId: id,
       title: title,
       edit: true,
       form: true,
@@ -124,7 +127,7 @@ export default class Calendar2 extends React.Component {
               />
             </div>
             <ModalEvent show={this.state.form} onClose={this.onClose} title={this.state.title} start={this.state.start}
-              end={this.state.end} addEvent={this.addEvent} id={this.state.id} >Hello</ModalEvent>
+              end={this.state.end} addEvent={this.addEvent} id={this.state.id} eventId={this.state.eventId} >Hello</ModalEvent>
           </div>) : (<h3>Please login</h3>)
         }
       </div>);

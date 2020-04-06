@@ -46,10 +46,9 @@ eventsCtrl.deleteEvent = async (req, res) => {
 }
 
 eventsCtrl.updateEvent = async (req, res) => {
-    const {title, start, start_old, end} = req.body;
-    console.log(title);
-    let sql = "UPDATE events SET title = ? , start =  ? , end = ? WHERE title = ? AND start = ?";
-    let values = [title, start, end, title, start_old];
+    const {title, start, end} = req.body;
+    let sql = "UPDATE events SET title = ? , start =  ? , end = ? WHERE id = ?";
+    let values = [title, start, end, req.params.id];
     await db.query(sql, values, (err, result) => {
         if(err){
             throw err;
