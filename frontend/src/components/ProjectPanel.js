@@ -48,6 +48,7 @@ export default class ProjectPanel extends React.Component {
                 title: props.project.title,
                 description: props.project.description,
                 doneButton: "",
+                taskDone: [],
                 barState: barState(),
                 displayTaskCard: new Array(props.project.tasks.length).fill(false),
                 //panel: false
@@ -130,25 +131,10 @@ export default class ProjectPanel extends React.Component {
         const barStyle = {
             width: this.state.barState + "%"
         }
-
-        const taStyle = {
-            border: "none",
-            outline: "none",
-            background: "none",
-            height: "150px",
-            width: "700px"
-        }
-
-        const inputStyle = {
-            border: "none",
-            outline: "none",
-            background: "none",
-            fontSize: "170%"
-        }
-
+        
         return (
             <div className="container">
-                <div className="col-9 row d-flex justify-content-between">
+                <div className="col-12 row d-flex justify-content-between">
                     <input type="text" name="title" style={inputStyle} value={this.state.title} onChange={this.onChange} />
                     <div>
                         <button className="btn btn-outline-danger m-1" onClick={() => this.deleteAlert(this.props.project.id)}>
@@ -178,4 +164,19 @@ export default class ProjectPanel extends React.Component {
             </div>
         )
     }
+}
+
+const taStyle = {
+    border: "none",
+    outline: "none",
+    background: "none",
+    height: "150px",
+    width: "700px"
+}
+
+const inputStyle = {
+    border: "none",
+    outline: "none",
+    background: "none",
+    fontSize: "170%"
 }

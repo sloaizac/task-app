@@ -36,8 +36,8 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <div className="card m-5">
-                <div className="card-header">
+            <div className="card col-4 mx-auto mt-5">
+                <div className="card-header text-general">
                     <h3>Login</h3>
                 </div>
                 <div className="card-body">
@@ -52,8 +52,8 @@ export default class Login extends React.Component {
                         </div>
                     </form>
                 </div>
-                <div className="card-footer">
-                    <button className="btn btn-primary" onClick={this.onSubmit} >
+                <div className="card-footer text-general">
+                    <button className="btn btn-primary btn-block" onClick={this.onSubmit} >
                         Login
                     </button>
                 </div>

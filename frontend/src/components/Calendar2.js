@@ -33,23 +33,23 @@ export default class Calendar2 extends React.Component {
   }
 
   getEvents = async () => {
-    const res = await axios.get("http://localhost:4000/events",
-      { params: { 'access-token': localStorage.getItem('access-token') } });
-    const a = []
-    res.data.map((e) => {   
-     return (a.push({
-        id: e.id,
-        title: e.title,
-        start: new Date(e.start),
-        end: new Date(e.end)
-      }
-      )
-      )
-    })
+    await axios.get("http://localhost:4000/events",
+      { params: { 'access-token': localStorage.getItem('access-token') } })
+      .then(res => {
+        const a = []
+        res.data.map((e) => {
+          return (a.push({
+            id: e.id,
+            title: e.title,
+            start: new Date(e.start),
+            end: new Date(e.end)}))
+        })
 
-    this.setState({
-      events: a
-    })
+        this.setState({
+          events: a
+        })
+      })
+      .catch(err => console.log(err))
   }
 
   addEvent = async (newEvent) => {
@@ -59,24 +59,27 @@ export default class Calendar2 extends React.Component {
           this.onClose();
           this.getEvents();
         })
-        .catch(err => {   
-          console.log(err);
-        })
-    }else {
+        .catch(err => console.log(err))
+    } else {
       await axios.post("http://localhost:4000/events", newEvent)
         .then(res => {
           this.onClose();
           this.getEvents();
         })
-        .catch(err => {
-          console.log(err);
-        })
+        .catch(err => console.log(err));
     }
-
-
   }
 
-  handleSelectEvent = ({id, title, start, end }) => {
+  deleteEvent = async (id) => {
+    await axios.delete("http://localhost:4000/events/" + id)
+      .then(res => {
+        this.onClose();
+        this.getEvents();
+      })
+      .catch(err => console.log(err))
+  }
+
+  handleSelectEvent = ({ id, title, start, end }) => {
     this.setState({
       id: !this.state.id,
       eventId: id,
@@ -107,7 +110,6 @@ export default class Calendar2 extends React.Component {
   }
 
   render() {
-
     return (
       <div className="m-4">
         {
@@ -127,7 +129,7 @@ export default class Calendar2 extends React.Component {
               />
             </div>
             <ModalEvent show={this.state.form} onClose={this.onClose} title={this.state.title} start={this.state.start}
-              end={this.state.end} addEvent={this.addEvent} id={this.state.id} eventId={this.state.eventId} >Hello</ModalEvent>
+              end={this.state.end} addEvent={this.addEvent} deleteEvent={this.deleteEvent} edit={this.state.edit} id={this.state.id} eventId={this.state.eventId} >Hello</ModalEvent>
           </div>) : (<h3>Please login</h3>)
         }
       </div>);

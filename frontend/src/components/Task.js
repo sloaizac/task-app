@@ -45,7 +45,7 @@ class Task extends React.Component {
             <div className="row" >
                 <li className="list-group-item d-flex justify-content-between align-items-center mt-1 col-4" key={this.props.t.id} style={styleTask} >
                     <input type="checkbox" className="mr-1" id={this.props.id} name="done" onChange={() => this.props.doneTask(this.props.t)} checked={this.props.t.done} />
-                    <div onClick={() => this.showDescription(this.props.t)} >{this.props.t.title}</div>
+                    <div className="m-2" onClick={() => this.showDescription(this.props.t)} >{this.props.t.title}</div>
                     <button className="btn" onClick={() => this.props.deleteTask(this.props.t.id)}>
                         <img src="trash.png" alt="delete_task" width="15" height="15" />
                     </button>

@@ -33,7 +33,7 @@ class ProjectForm extends React.Component {
     render() {
         return (
         <div className="card">
-            <div className="card-header">
+            <div className="card-header text-general">
                 <h5>Create project</h5>
             </div>
             <form className="p-2">
@@ -45,7 +45,7 @@ class ProjectForm extends React.Component {
                     <label>Description</label>
                     <textarea onChange={this.onChange} name="description" id="description" className="form-control" />
                 </div> 
-                <button type="submit" className="btn btn-primary" onClick={this.onSubmit}>Create</button>   
+                <button type="submit" className="btn btn-primary text-general" onClick={this.onSubmit}>Create</button>   
             </form>    
         </div>           
         )

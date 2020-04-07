@@ -59,15 +59,16 @@ export default class ProjectList extends React.Component {
         return (
             <div>
                 {
-                    (isAuthenticated()) ? (<div className="container row m-3">
-                        <div className="row col-12">
-                            <h2>Projects</h2>
-                            <button className="btn btn-success ml-4" onClick={() => this.addProject()}>
+                    (isAuthenticated()) ? (<div id="panel" className="container row m-3 ">
+                        <div id="menu-projects" className="col-3 ">
+                        <div className="row text-general">
+                            <h1>Projects</h1>
+                            <button className="btn btn-success m-2" onClick={() => this.addProject()}>
                                 Add project
-                    </button>
+                            </button>
                         </div>
 
-                        <div className="col-3 mt-4">
+                        <div className=" mt-4">
                             <ul className="list-group">
                                 {
                                     this.state.projects.map((p) => (
@@ -83,8 +84,9 @@ export default class ProjectList extends React.Component {
                                 }
                             </ul>
                         </div>
+                        </div>
 
-                        <div className="col-9">
+                        <div className="ml-2">
                             {this.state.panel}
                         </div>
                     </div>) : (<h3>Please login</h3>)

@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&family=Roboto:wght@300&display=swap');
+
+body{
+    font-family: 'Roboto', sans-serif;  
+}
+
+.text-general{
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+#panel{
+    display: table;
+}
+
+#menu-projects{
+    display: table-cell;
+    border-right: 1px solid;
+}
+
+#notes-bar{
+    border-bottom: 1px solid ;
+}
+
+.card-note{
+    background-color: #f2f2f2;
+    padding: 0%;
+}
+

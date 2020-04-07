@@ -32,22 +32,8 @@ export default class NoteCard extends React.Component {
     }
 
     render() {
-
-        const taStyle = {
-            border: "none",
-            outline: "none",
-            background: "none",
-            height: "200px"
-        }
-
-        const inputStyle = {
-            border: "none",
-            outline: "none",
-            background: "none"
-        }
-
         return (
-            <div className="card m-2 col-3" key={this.props.n.id}>
+            <div className="card m-2 col-3 card-note" key={this.props.n.id}>
                 <div className="card-header">
                     <input type="text" name="title" value={this.state.title} style={inputStyle} onChange={this.onChange} />
                 </div>
@@ -64,4 +50,17 @@ export default class NoteCard extends React.Component {
         )
     }
 
+}
+
+const taStyle = {
+    border: "none",
+    outline: "none",
+    background: "none",
+    height: "200px"
+}
+
+const inputStyle = {
+    border: "none",
+    outline: "none",
+    background: "none"
 }

@@ -63,16 +63,16 @@ export default class NotesList extends React.Component {
     render() {
 
         return (
-            <div className="container pt-2">
+            <div>
                 {
-                    (isAuthenticated()) ? (<div>
-                        <div className="row">
-                            <h2>Notes</h2>
-                            <button className="btn btn-success ml-5" onClick={() => this.noteForm()}>
+                    (isAuthenticated()) ? (<div className="container-fluid">
+                        <div id="notes-bar" className="row text-general pl-4 pr-4">
+                            <h1>Notes</h1>
+                            <button className="btn btn-success ml-3 m-2" onClick={() => this.noteForm()}>
                                 Add note
                             </button>
                         </div>
-                        <div className="row mt-2">
+                        <div className="row m-3">
                             {
                                 this.state.notes.map((n) => (
                                     <NoteCard n={n} deleteNote={this.deleteNote} key={n.id} updateNote={this.updateNote} />
