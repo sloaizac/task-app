@@ -36,7 +36,10 @@ export default class Login extends React.Component {
 
     render() {
         return (
-            <div className="card">
+            <div className="card m-5">
+                <div className="card-header">
+                    <h3>Login</h3>
+                </div>
                 <div className="card-body">
                     <form>
                         <div className="form-group">

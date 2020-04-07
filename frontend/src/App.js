@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import './css/style.css'
 // Components
 import Navigation from './components/Navigation';
 import NotesList from './components/NotesList';

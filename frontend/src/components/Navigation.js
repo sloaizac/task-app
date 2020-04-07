@@ -11,12 +11,13 @@ export default class Navigation extends React.Component {
     }
 
     render() {
+
         return (
             < nav className="navbar navbar-expand-lg navbar-dark bg-dark d-flex justify-content-between ">
                 <div className="d-flex justify-content-start">
-                    <div>
-                        <Link className="navbar-brand" to="/">
-                            <img src="/Happy_smiley_face.png" alt="logo" width="45" height="35" />
+                    <div> 
+                        <Link className="navbar-brand card bg-secondary text-white p-1" to="/">
+                            Planner
                         </Link>
                     </div>
 
