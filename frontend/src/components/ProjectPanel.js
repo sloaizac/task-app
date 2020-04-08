@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import TaskForm from "./TaskForm";
-import Task from './Task';
+import TaskList from './TaskList';
 
 
 export default class ProjectPanel extends React.Component {
@@ -13,49 +13,24 @@ export default class ProjectPanel extends React.Component {
             title: props.project.title,
             description: props.project.description,
             doneButton: "",
-            displayTaskCard: [],
-            panel: false,
-            barState: 0
+            panel: false
         }
     }
-
-    componentDidMount() {
-        this.setState({
-            displayTaskCard: new Array(this.props.project.tasks.length).fill(false)
-        })
-
-    }
-
 
     static getDerivedStateFromProps(props, state) {
 
-        const barState = () => {
-            let totalTask = props.project.tasks.length;
-            let doneTasks = 0;
-            props.project.tasks.forEach(t => {
-                if (t.done) {
-                    doneTasks++;
-                }
-            })
-            return parseInt((doneTasks * 100) / totalTask);
-        }
-
-        if (props.project.id !== state.id ||
-            props.project.tasks.length !== state.displayTaskCard.length || barState() !== state.barState) {
+        if (props.project.id !== state.id) {
                 
             return {
                 id: props.project.id,
                 title: props.project.title,
                 description: props.project.description,
-                doneButton: "",
-                taskDone: [],
-                barState: barState(),
-                displayTaskCard: new Array(props.project.tasks.length).fill(false),
-                //panel: false
+                doneButton: ""
             }
         }
         return null
     }
+
 
     addTask = async (newTask) => {
         await axios.post('http://localhost:4000/tasks', newTask);
@@ -63,41 +38,14 @@ export default class ProjectPanel extends React.Component {
         this.onClose();
     }
 
-
     deleteAlert = (id) => {
         if (window.confirm("¿Eliminar este proyecto y sus tareas?") === true) {
             this.props.deleteProject(id);
         }
     }
 
-    deleteTask = async (id) => {
-        await axios.delete("http://localhost:4000/tasks/" + id);
-        this.props.showProject(this.props.project.id);
-    }
-
-    doneTask = async (task) => {
-        const newTask = {
-            id: task.id,
-            title: task.title,
-            description: task.description,
-            done: !task.done
-        }
-        await axios.put("http://localhost:4000/tasks/" + task.id, newTask);
-        this.props.showProject(this.props.project.id);
-    }
-
     handleClickAddTasks = () => {      
         this.setState({ panel: true });
-    }
-
-    displayTaskCard = (id) => {
-        let taskIndex = this.props.project.tasks.map(t => { return t.id }).indexOf(id);
-        let temp = this.state.displayTaskCard;
-        temp[taskIndex] = !this.state.displayTaskCard[taskIndex];
-        this.setState({
-            displayTaskCard: temp
-        })
-        return this.state.displayTaskCard[taskIndex];
     }
 
     save = () => {
@@ -126,12 +74,10 @@ export default class ProjectPanel extends React.Component {
         })
     }
 
-    render() {
 
-        const barStyle = {
-            width: this.state.barState + "%"
-        }
-        
+
+    render() {
+   
         return (
             <div className="container">
                 <div className="col-12 row d-flex justify-content-between">
@@ -149,17 +95,10 @@ export default class ProjectPanel extends React.Component {
                     <textarea name="description" style={taStyle} value={this.state.description} onChange={this.onChange} />
                     <div className="m-2">{this.state.doneButton}</div>
                 </div>
-                <div className="container mt-2">
-                    <ul className="list-group">
-                        {this.props.project.tasks.map((t) => (
-                            <Task t={t} key={t.id} deleteTask={this.deleteTask}
-                                displayTaskCard={this.displayTaskCard} doneTask={this.doneTask} />
-                        ))}
-                    </ul>
+                <div>
+                    <TaskList tasks = {this.props.project.tasks} project_id={this.state.id} showProject={this.props.showProject} />
                 </div>
-                <div className="progress col-9 mt-5">
-                    <div className="progress-bar" role="progressbar" style={barStyle} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{this.state.barState}%</div>
-                </div>
+                <div className="mt-2"></div>
                 <TaskForm project_id={this.state.id} addTask={this.addTask} show={this.state.panel} onClose={this.onClose} />
             </div>
         )
