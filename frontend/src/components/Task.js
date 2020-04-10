@@ -14,7 +14,7 @@ class Task extends React.Component {
         let  display = this.props.displayTaskCard();
         if(display){
             this.setState({
-                cardTask: <div className="card col-5">
+                cardTask: <div className="card task-card">
                     <div className="card-header">
                         {task.title}
                     </div>
@@ -43,7 +43,7 @@ class Task extends React.Component {
 
         return (
             <div className="row" >
-                <li className="list-group-item d-flex justify-content-between align-items-center mt-1 col-4" key={this.props.t.id} style={styleTask} >
+                <li className="list-group-item d-flex justify-content-between align-items-center mt-1 task-card" key={this.props.t.id} style={styleTask} >
                     <input type="checkbox" className="mr-1" id={this.props.id} name="done" onChange={() => this.props.doneTask(this.props.t)} checked={this.props.t.done} />
                     <div className="m-2" onClick={() => this.showDescription(this.props.t)} >{this.props.t.title}</div>
                     <button className="btn" onClick={() => this.props.deleteTask(this.props.t.id)}>

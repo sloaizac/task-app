@@ -23,29 +23,30 @@ export default class NoteCard extends React.Component {
         })
     }
 
-    onChange = (e) => { 
+    onChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value,
-            doneButton: <button className="btn btn-success btn-sm" onClick={this.save}>done</button> 
+            doneButton: <button className="btn btn-success btn-sm" onClick={this.save}>done</button>
         })
-        
+
     }
 
     render() {
         return (
             <div className="card m-2 col-3 card-note" key={this.props.n.id}>
-                <div className="card-header">
+                <div className="card-header d-flex justify-content-between">
                     <input type="text" name="title" value={this.state.title} style={inputStyle} onChange={this.onChange} />
+                    <button className="btn ml-2" onClick={() => this.props.deleteNote(this.props.n.id)}>
+                        <img src="trash.png" alt="delete" width="20" height="20" />
+                    </button>
                 </div>
-                <div className="card-body">
+                <div className="card-body p-0">
                     <textarea name="description" style={taStyle} value={this.state.description} onChange={this.onChange} />
                     <div className="d-flex justify-content-end mt-1">
-                    {this.state.doneButton}
+                        {this.state.doneButton}
                     </div>
                 </div>
-                <button className="btn card-footer" onClick={() => this.props.deleteNote(this.props.n.id)}>
-                    <img src="trash.png" alt="delete" width="20" height="20" />
-                </button>
+
             </div>
         )
     }
@@ -56,7 +57,8 @@ const taStyle = {
     border: "none",
     outline: "none",
     background: "none",
-    height: "200px"
+    height: "200px",
+    width: "100%"
 }
 
 const inputStyle = {

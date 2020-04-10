@@ -3,10 +3,12 @@ import axios from "axios";
 
 import Task from './Task';
 
-export default class TaskList extends React.Component{
+export default class TaskList extends React.Component {
 
     state = {
         id: this.props.project_id,
+        tasksDone: [],
+        tasks: [],
         displayTaskCard: [],
         barstate: 0
     }
@@ -16,6 +18,8 @@ export default class TaskList extends React.Component{
             displayTaskCard: new Array(this.props.tasks.length).fill(false)
         })
     }
+
+
 
     static getDerivedStateFromProps(props, state) {
         const barState = () => {
@@ -29,11 +33,30 @@ export default class TaskList extends React.Component{
             return parseInt((doneTasks * 100) / totalTask);
         }
 
+        const kindOfTask = (tasks) => {
+            let dt = [];
+            let pt = [];
+            tasks.map(t => {
+                if (t.done) {
+                    dt.push(t);
+                } else {
+                    pt.push(t);
+                }
+            })
+            return ({
+                tasks: pt,
+                tasksDone: dt
+            })
+        }
+
         if (props.project_id !== state.id ||
             props.tasks.length !== state.displayTaskCard.length || barState() !== state.barState) {
-                
+
+            const t = kindOfTask(props.tasks);
             return {
                 id: props.project_id,
+                tasks: t.tasks,
+                tasksDone: t.tasksDone,
                 barState: barState(),
                 displayTaskCard: new Array(props.tasks.length).fill(false),
             }
@@ -68,24 +91,44 @@ export default class TaskList extends React.Component{
     }
 
 
-    render(){
+    render() {
         const barStyle = {
             width: this.state.barState + "%"
         }
 
-        return(
+        return (
             <div>
-                <div className="container mt-2">
-                    <ul className="list-group">
-                        {this.props.tasks.map((t) => (
-                            <Task t={t} key={t.id} deleteTask={this.deleteTask}
-                                displayTaskCard={this.displayTaskCard} doneTask={this.doneTask} />
-                        ))}
-                    </ul>
-                </div>
-                <div className="progress col-9 mt-5">
+                 <div className="progress mt-5">
                     <div className="progress-bar" role="progressbar" style={barStyle} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{this.state.barState}%</div>
-                </div>    
+                </div>
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th>To do:</th>
+                            <th>Done:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <ul className="list-group">
+                                    {this.state.tasks.map((t) => (
+                                        <Task t={t} key={t.id} deleteTask={this.deleteTask}
+                                            displayTaskCard={this.displayTaskCard} doneTask={this.doneTask} />
+                                    ))}
+                                </ul>
+                            </td>
+                            <td >
+                                <ul className="list-group">
+                                    {this.state.tasksDone.map((t) => (
+                                        <Task t={t} key={t.id} deleteTask={this.deleteTask}
+                                            displayTaskCard={this.displayTaskCard} doneTask={this.doneTask} />
+                                    ))}
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         )
 
