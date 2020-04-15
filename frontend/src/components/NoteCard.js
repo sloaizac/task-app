@@ -33,10 +33,10 @@ export default class NoteCard extends React.Component {
 
     render() {
         return (
-            <div className="card m-2 col-3 card-note" key={this.props.n.id}>
-                <div className="card-header d-flex justify-content-between">
+            <div className="card m-2 d-md-flex d-sm-flex d-lg-flex card-note" key={this.props.n.id}>
+                <div className="card-header d-flex justify-content-around">
                     <input type="text" name="title" value={this.state.title} style={inputStyle} onChange={this.onChange} />
-                    <button className="btn ml-2" onClick={() => this.props.deleteNote(this.props.n.id)}>
+                    <button className="btn m-2" onClick={() => this.props.deleteNote(this.props.n.id)}>
                         <img src="trash.png" alt="delete" width="20" height="20" />
                     </button>
                 </div>

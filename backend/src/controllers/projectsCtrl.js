@@ -2,24 +2,24 @@ const db = require("../db/database");
 
 const projectsCtrl = {};
 
-projectsCtrl.getProjects = async (req, res) => {
+projectsCtrl.getProjects = (req, res) => {
 
     let sql = "SELECT * FROM projects WHERE user_id = ?";
     values = [req.user]
-    await db.query(sql, values, (err, result) => {
+    db.query(sql, values, (err, result) => {
         if (err) {
             throw err;
         }
         res.send(result);
-    }) 
+    })
 }
 
-projectsCtrl.createProject = async (req, res) => {
+projectsCtrl.createProject = (req, res) => {
     try {
-        const {user_id, title, description} = req.body;
+        const { user_id, title, description } = req.body;
         let sql = "INSERT INTO projects (user_id, title, description) VALUES (?, ?, ?)";
         let values = [user_id, title, description];
-        await db.query(sql, values,(err, result) => {
+        db.query(sql, values, (err, result) => {
             if (err) {
                 throw err;
             }
@@ -31,11 +31,11 @@ projectsCtrl.createProject = async (req, res) => {
     }
 }
 
-projectsCtrl.updateProject = async (req, res) => {
-    const {id, title, description} = req.body
+projectsCtrl.updateProject = (req, res) => {
+    const { id, title, description } = req.body
     let sql = "UPDATE projects SET title = ?, description= ? WHERE id = " + id;
     let values = [title, description];
-    await db.query(sql, values, (err, result) => {
+    db.query(sql, values, (err, result) => {
         if (err) {
             throw err;
         }
@@ -43,27 +43,27 @@ projectsCtrl.updateProject = async (req, res) => {
     })
 }
 
-projectsCtrl.deleteProject = async (req, res) => {
+projectsCtrl.deleteProject = (req, res) => {
     const id = req.params.id
     let sql = "DELETE FROM tasks WHERE tasks.project_id =" + id;
-    await db.query(sql, async (err, result) => {
+    db.query(sql, (err, result) => {
         if (err) {
             throw err;
         }
 
         let sql2 = "DELETE FROM projects WHERE projects.id = " + id;
-        await db.query(sql2, (err, result) => {
+        db.query(sql2, (err, result) => {
             if (err) {
                 throw err;
             }
         })
-        res.send("Successfuly query"); 
+        res.send("Successfuly query");
     })
 }
 
 
 
-projectsCtrl.getProject = async (req, res) => {
+projectsCtrl.getProject = (req, res) => {
     let project = {
         id: "",
         title: "",
@@ -73,7 +73,7 @@ projectsCtrl.getProject = async (req, res) => {
 
     const id = req.params.id
     let sql = "SELECT * FROM projects WHERE id = " + id;
-    await db.query(sql, async (err, result) => {
+    db.query(sql, (err, result) => {
         if (err) {
             throw err;
         }
@@ -84,8 +84,8 @@ projectsCtrl.getProject = async (req, res) => {
         project.description = json[0].description;
 
         let sql_task = "SELECT * FROM tasks WHERE tasks.project_id = " + project.id;
-        await db.query(sql_task, (err, result) => {
-            if(err){
+        db.query(sql_task, (err, result) => {
+            if (err) {
                 throw err;
             }
             let string = JSON.stringify(result);
@@ -93,7 +93,7 @@ projectsCtrl.getProject = async (req, res) => {
             project.tasks = json;
             res.json(project);
         })
-    
+
     })
 
 

@@ -42,6 +42,7 @@ export default class TaskList extends React.Component {
                 } else {
                     pt.push(t);
                 }
+                return t
             })
             return ({
                 tasks: pt,
@@ -98,37 +99,26 @@ export default class TaskList extends React.Component {
 
         return (
             <div>
-                 <div className="progress mt-5">
+                <div className="progress mt-5">
                     <div className="progress-bar" role="progressbar" style={barStyle} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{this.state.barState}%</div>
                 </div>
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>To do:</th>
-                            <th>Done:</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <ul className="list-group">
-                                    {this.state.tasks.map((t) => (
-                                        <Task t={t} key={t.id} deleteTask={this.deleteTask}
-                                            displayTaskCard={this.displayTaskCard} doneTask={this.doneTask} />
-                                    ))}
-                                </ul>
-                            </td>
-                            <td >
-                                <ul className="list-group">
-                                    {this.state.tasksDone.map((t) => (
-                                        <Task t={t} key={t.id} deleteTask={this.deleteTask}
-                                            displayTaskCard={this.displayTaskCard} doneTask={this.doneTask} />
-                                    ))}
-                                </ul>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+
+                <div className="row d-flex m-2" >
+                    <ul className="col-md-6">
+                        {this.state.tasks.map((t) => (
+                            <Task t={t} key={t.id} deleteTask={this.deleteTask}
+                                displayTaskCard={this.displayTaskCard} doneTask={this.doneTask} />
+                        ))}
+                    </ul>
+
+                    <ul className="col-md-6">
+                        {this.state.tasksDone.map((t) => (
+                            <Task t={t} key={t.id} deleteTask={this.deleteTask}
+                                displayTaskCard={this.displayTaskCard} doneTask={this.doneTask} />
+                        ))}
+                    </ul>
+                </div>
+
             </div>
         )
 

@@ -66,7 +66,7 @@ export default class NotesList extends React.Component {
             <div>
                 {
                     (isAuthenticated()) ? (<div className="container-fluid">
-                        <div id="notes-bar" className="row text-general pl-4 pr-4">
+                        <div className="row text-general bar pl-4 pr-4">
                             <h1>Notes</h1>
                             <button className="btn btn-success ml-3 m-2" onClick={() => this.noteForm()}>
                                 Add note

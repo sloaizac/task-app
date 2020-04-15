@@ -2,10 +2,10 @@ const db = require('../db/database');
 
 eventsCtrl = {};
 
-eventsCtrl.getEvents = async (req, res) => {
+eventsCtrl.getEvents = (req, res) => {
     let sql = "SELECT * FROM events WHERE user_id = ?";
     let values = [req.user];
-    await db.query(sql, values, (err, result) => {
+    db.query(sql, values, (err, result) => {
         if (err) {
             throw err;
         }
@@ -13,12 +13,12 @@ eventsCtrl.getEvents = async (req, res) => {
     })
 }
 
-eventsCtrl.createEvent = async (req, res) => {
+eventsCtrl.createEvent = (req, res) => {
     try {
-        const {user_id, title, start, end} = req.body;
+        const { user_id, title, start, end } = req.body;
         let sql = "INSERT INTO events (user_id, title, start, end) VALUES (?, ?, ?, ?)";
         let values = [user_id, title, start, end];
-        await db.query(sql, values,(err, result) => {
+        db.query(sql, values, (err, result) => {
             if (err) {
                 throw err;
             }
@@ -30,31 +30,31 @@ eventsCtrl.createEvent = async (req, res) => {
     }
 }
 
-eventsCtrl.deleteEvent = async (req, res) => {
-    try{
+eventsCtrl.deleteEvent = (req, res) => {
+    try {
         const id = req.params.id;
         let sql = "DELETE FROM events WHERE id =" + id;
-        await db.query(sql, (err, result) => {
-            if(err){
+        db.query(sql, (err, result) => {
+            if (err) {
                 throw err;
             }
             res.send("Successfully query");
         })
-    }catch (e) {
-        res.json({message : e});
+    } catch (e) {
+        res.json({ message: e });
     }
 }
 
-eventsCtrl.updateEvent = async (req, res) => {
-    const {title, start, end} = req.body;
+eventsCtrl.updateEvent = (req, res) => {
+    const { title, start, end } = req.body;
     let sql = "UPDATE events SET title = ? , start =  ? , end = ? WHERE id = ?";
     let values = [title, start, end, req.params.id];
-    await db.query(sql, values, (err, result) => {
-        if(err){
+    db.query(sql, values, (err, result) => {
+        if (err) {
             throw err;
         }
-        
-        
+
+
         res.send("Sucessfully query");
     })
 }

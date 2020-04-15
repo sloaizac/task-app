@@ -32,8 +32,8 @@ export default class Calendar2 extends React.Component {
     this.getEvents();
   }
 
-  getEvents = async () => {
-    await axios.get("http://localhost:4000/events",
+  getEvents = () => {
+    axios.get("http://localhost:4000/events",
       { params: { 'access-token': localStorage.getItem('access-token') } })
       .then(res => {
         const a = []
@@ -42,7 +42,8 @@ export default class Calendar2 extends React.Component {
             id: e.id,
             title: e.title,
             start: new Date(e.start),
-            end: new Date(e.end)}))
+            end: new Date(e.end)
+          }))
         })
 
         this.setState({
@@ -52,16 +53,16 @@ export default class Calendar2 extends React.Component {
       .catch(err => console.log(err))
   }
 
-  addEvent = async (newEvent) => {
+  addEvent = (newEvent) => {
     if (this.state.edit) {
-      await axios.put("http://localhost:4000/events/" + newEvent.eventId, newEvent)
+      axios.put("http://localhost:4000/events/" + newEvent.eventId, newEvent)
         .then(res => {
           this.onClose();
           this.getEvents();
         })
         .catch(err => console.log(err))
     } else {
-      await axios.post("http://localhost:4000/events", newEvent)
+      axios.post("http://localhost:4000/events", newEvent)
         .then(res => {
           this.onClose();
           this.getEvents();
@@ -70,8 +71,8 @@ export default class Calendar2 extends React.Component {
     }
   }
 
-  deleteEvent = async (id) => {
-    await axios.delete("http://localhost:4000/events/" + id)
+  deleteEvent = (id) => {
+    axios.delete("http://localhost:4000/events/" + id)
       .then(res => {
         this.onClose();
         this.getEvents();

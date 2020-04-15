@@ -19,8 +19,8 @@ export default class ProjectList extends React.Component {
     }
 
     getProjects = async () => {
-        const result = await axios.get('http://localhost:4000/projects' ,
-        { params: { 'access-token': localStorage.getItem('access-token') } });
+        const result = await axios.get('http://localhost:4000/projects',
+            { params: { 'access-token': localStorage.getItem('access-token') } });
         this.setState({
             projects: result.data,
             panel: ""
@@ -45,8 +45,8 @@ export default class ProjectList extends React.Component {
     }
 
     showProject = async (id) => {
-        const result = await axios.get('http://localhost:4000/projects/' + id, 
-        { params: { 'access-token': localStorage.getItem('access-token') } });
+        const result = await axios.get('http://localhost:4000/projects/' + id,
+            { params: { 'access-token': localStorage.getItem('access-token') } });
         this.setState({
             currentProject: result.data,
             panel: <ProjectPanel project={result.data} showProject={this.showProject}
@@ -57,39 +57,35 @@ export default class ProjectList extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="container-fluid">
                 {
-                    (isAuthenticated()) ? (<div  id="panel" className="container row m-3">
-                        <div id="menu-projects" className="col-3">
-                        <div className="row text-general">
-                            <h1>Projects</h1>
+                    (isAuthenticated()) ? (<div>
+                        <div className="row text-general bar">
                             <button className="btn btn-success m-2" onClick={() => this.addProject()}>
                                 Add project
                             </button>
-                        </div>
 
-                        <div className=" mt-4">
-                            <ul className="list-group">
-                                {
-                                    this.state.projects.map((p) => (
-                                        <li className="list-group-item d-flex justify-content-between align-items-center" key={p.id} onClick={() => this.showProject(p.id)}>
-                                            <div>
-                                                <img src="project_icon.png" alt="project" width="15" height="15" className="mr-2" />
+                            <div className="dropdown m-2">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Projects list
+                                </button>
+                                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    {
+                                        this.state.projects.map((p) => (
+                                            <div className="dropdown-item" key={p.id} onClick={() => this.showProject(p.id)}>
                                                 {p.title}
                                             </div>
-
-                                            <span className="badge badge-primary badge-pill">{}</span>
-                                        </li>
-                                    ))
-                                }
-                            </ul>
-                        </div>
+                                        ))
+                                    }
+                                </div>
+                            </div>
                         </div>
 
                         <div className="ml-2">
                             {this.state.panel}
                         </div>
-                    </div>) : (<h3>Please login</h3>)
+                    </div>
+                    ) : (<h3>Please login</h3>)
                 }
 
             </div>

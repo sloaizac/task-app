@@ -20,7 +20,7 @@ export default class ProjectPanel extends React.Component {
     static getDerivedStateFromProps(props, state) {
 
         if (props.project.id !== state.id) {
-                
+
             return {
                 id: props.project.id,
                 title: props.project.title,
@@ -44,7 +44,7 @@ export default class ProjectPanel extends React.Component {
         }
     }
 
-    handleClickAddTasks = () => {      
+    handleClickAddTasks = () => {
         this.setState({ panel: true });
     }
 
@@ -60,7 +60,7 @@ export default class ProjectPanel extends React.Component {
         })
     }
 
-    onChange = (e) => {  
+    onChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value,
             doneButton: <button className="btn btn-success btn-sm" onClick={this.save}>done</button>
@@ -75,28 +75,27 @@ export default class ProjectPanel extends React.Component {
     }
 
 
-
     render() {
-   
+
         return (
-            <div className="container">
-                <div className="col-12 row d-flex justify-content-between">
-                    <input type="text" name="title" style={inputStyle} value={this.state.title} onChange={this.onChange} />
+            <div className="p-0">
+                <label id="delete-project" className="btn" onClick={() => this.deleteAlert(this.props.project.id)}>
+                    x
+                </label>
+                <div className="col-12 row d-flex justify-content-between p-15">
+                    <input type="text" id="input-p" name="title" value={this.state.title} onChange={this.onChange} />
                     <div>
-                        <button className="btn btn-outline-danger m-1" onClick={() => this.deleteAlert(this.props.project.id)}>
-                            Delete
-                        </button>
-                        <button className="btn btn-outline-success m-1" onClick={this.handleClickAddTasks}>
-                            Add tasks
+                        <button className="btn btn-success btn-sm mt-1 mr-1" onClick={this.handleClickAddTasks}>
+                            new task
                         </button>
                     </div>
                 </div>
-                <div className="mt-2">
-                    <textarea name="description" style={taStyle} value={this.state.description} onChange={this.onChange} />
+                <div className="mt-2 p-15">
+                    <textarea name="description" id="description-p" value={this.state.description} onChange={this.onChange} />
                     <div className="m-2">{this.state.doneButton}</div>
                 </div>
-                <div>
-                    <TaskList tasks = {this.props.project.tasks} project_id={this.state.id} showProject={this.props.showProject} />
+                <div className="mt-1">
+                    <TaskList tasks={this.props.project.tasks} project_id={this.state.id} showProject={this.props.showProject} />
                 </div>
                 <div className="mt-2"></div>
                 <TaskForm project_id={this.state.id} addTask={this.addTask} show={this.state.panel} onClose={this.onClose} />
@@ -105,17 +104,3 @@ export default class ProjectPanel extends React.Component {
     }
 }
 
-const taStyle = {
-    border: "none",
-    outline: "none",
-    background: "none",
-    height: "150px",
-    width: "700px"
-}
-
-const inputStyle = {
-    border: "none",
-    outline: "none",
-    background: "none",
-    fontSize: "170%"
-}

@@ -2,11 +2,11 @@ const db = require('../db/database');
 
 notesCtrl = {};
 
-notesCtrl.getNotes = async (req, res) => { 
-    let sql = "SELECT * FROM notes WHERE user_id = ?" ;
+notesCtrl.getNotes = (req, res) => {
+    let sql = "SELECT * FROM notes WHERE user_id = ?";
     let values = [req.user];
-    
-    await db.query(sql, values, (err, result) => {
+
+    db.query(sql, values, (err, result) => {
         if (err) {
             throw err;
         }
@@ -14,12 +14,12 @@ notesCtrl.getNotes = async (req, res) => {
     })
 }
 
-notesCtrl.createNote = async (req, res) => {
+notesCtrl.createNote = (req, res) => {
     try {
-        const {user_id, title, description} = req.body;
+        const { user_id, title, description } = req.body;
         let sql = "INSERT INTO notes (user_id, title, description) VALUES (?, ?, ?)";
         let values = [user_id, title, description];
-        await db.query(sql, values,(err, result) => {
+        db.query(sql, values, (err, result) => {
             if (err) {
                 throw err;
             }
@@ -31,27 +31,27 @@ notesCtrl.createNote = async (req, res) => {
     }
 }
 
-notesCtrl.deleteNote = async (req, res) => {
-    try{
+notesCtrl.deleteNote = (req, res) => {
+    try {
         const id = req.params.id;
         let sql = "DELETE FROM notes WHERE notes.id =" + id;
-        await db.query(sql, (err, result) => {
-            if(err){
+        db.query(sql, (err, result) => {
+            if (err) {
                 throw err;
             }
             res.send("Successfully query");
         })
-    }catch (e) {
-        res.json({message : e});
+    } catch (e) {
+        res.json({ message: e });
     }
 }
 
-notesCtrl.updateNote = async (req, res) => {
-    const {id, title, description} = req.body;
+notesCtrl.updateNote = (req, res) => {
+    const { id, title, description } = req.body;
     let sql = "UPDATE notes SET title = ? , description =  ? WHERE id = " + id;
     let values = [title, description];
-    await db.query(sql, values, (err, result) => {
-        if(err){
+    db.query(sql, values, (err, result) => {
+        if (err) {
             throw err;
         }
         res.send("Sucessfully query");
